@@ -1,4 +1,23 @@
-let itemsContainerElement = document.querySelector('.items-container');
+let bagItems = [];
+displayItemsOnHomePage();
+displayBagIcon();
+
+function addToBag(itemId) {
+    bagItems.push(itemId);
+    displayBagIcon();
+}
+
+function displayBagIcon() {
+    let bagItemCountElement = document.querySelector('.bag-item-count');
+    if (bagItems.length > 0) {
+        bagItemCountElement.innerText = bagItems.length;
+    } else {
+        bagItemCountElement.computedStyleMap.visibility = 'hidden';
+    }
+}
+
+function displayItemsOnHomePage() {
+    let itemsContainerElement = document.querySelector('.items-container');
 
 let innerHtml = '';
 items.forEach(item => {
@@ -16,8 +35,10 @@ items.forEach(item => {
             <span class="original-price"> Rs ${item.original_price}</span>
             <span class="discount">(${item.discount_percentage}% OFF)</span>
         </div>
-        <button class="btn-add-bag">Add to Bag</button>
+        <button class="btn-add-bag" onclick="addToBag" onclick="addToBag(${item.id})">Add to Bag</button>
     </div>`
 });
 
 itemsContainerElement.innerHTML = innerHtml;
+}
+
