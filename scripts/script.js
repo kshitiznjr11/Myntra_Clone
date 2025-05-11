@@ -1,15 +1,23 @@
-let bagItems = [];
-displayItemsOnHomePage();
-displayBagIcon();
+let bagItems;
+onLoad();
+
+function onLoad() {
+    let bagItemsStr = localStorage.getItem('bagItems');
+    bagItems = bagItemsStr ? JSON.parse(bagItemsStr) : [];
+    displayItemsOnHomePage();
+    displayBagIcon();
+}
 
 function addToBag(itemId) {
     bagItems.push(itemId);
+    localStorage.setItem('bagItems', JSON.stringify(bagItems));
     displayBagIcon();
 }
 
 function displayBagIcon() {
     let bagItemCountElement = document.querySelector('.bag-item-count');
     if (bagItems.length > 0) {
+        bagItemCountElement.computedStyleMap.visibility = 'visible';
         bagItemCountElement.innerText = bagItems.length;
     } else {
         bagItemCountElement.computedStyleMap.visibility = 'hidden';
